@@ -15,16 +15,10 @@ class ViewController: UIViewController {
     var countries = [String]()
     var score = 0
     var correctAnswer = 0
+    var questionsAsked = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        countries.append("estonia")
-//        countries.append("france")
-//        countries.append("germany")
-//        countries.append("ireland")
-//        countries.append("italy")
-
 // We can also  append all these countries in the countries array in a simplier way
         countries += ["estonia", "france", "germany", "ireland", "italy", "monaco","nigeria", "poland", "russia", "spain", "uk","us"]
         
@@ -50,26 +44,27 @@ class ViewController: UIViewController {
         button3.setImage(UIImage(named: countries[2]), for: .normal)
         
         title = countries[correctAnswer].uppercased()
-
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Your score is \(score)",
+                                                            style: .plain,
+                                                            target: nil,
+                                                            action: nil)
     }
     
     @IBAction func buttonTapped(_ sender: UIButton) {
         var title: String
         
         if sender.tag == correctAnswer {
-            title = "Correct"
+            title = "That's correct"
             score += 1
         } else {
-            title = "Wrong"
+            title = "Wrong, that's the flag of \(countries[sender.tag].uppercased())"
             score -= 1
         }
         
         let ac = UIAlertController(title: title, message: "Your score is \(score)", preferredStyle: .alert)
-        
         ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: askQuestion))
-        
         present(ac, animated: true)
     }
-    
 }
 
